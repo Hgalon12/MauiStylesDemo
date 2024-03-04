@@ -9,6 +9,44 @@ namespace MauiStylesDemo.ViewModels
 {
     public class FormValidationViewModel:ViewModelBase
     {
+
+        private bool showDateError;
+
+        public bool ShowDateError
+        {
+            get => showDateError;
+            set
+            {
+                showDateError = value;
+                OnPropertyChanged("ShowDateError");
+            }
+        }
+
+        private DateTime date;
+
+        public DateTime Date
+        {
+            get => date;
+            set
+            {
+                date = value;
+                ValidateName();
+                OnPropertyChanged("Date");
+            }
+        }
+
+        private string dateError;
+
+        public string DateError
+        {
+            get => dateError;
+            set
+            {
+                dateError = value;
+                OnPropertyChanged("DateError");
+            }
+        }
+
         #region שם
         private bool showNameError;
 
@@ -89,6 +127,13 @@ namespace MauiStylesDemo.ViewModels
                 OnPropertyChanged("AgeError");
             }
         }
+
+
+        private void ValidateDate()
+        {
+            this.ShowDateError = !Age.HasValue || Age <= 13;
+        }
+
 
         private void ValidateAge()
         {
