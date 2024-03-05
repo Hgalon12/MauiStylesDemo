@@ -30,7 +30,7 @@ namespace MauiStylesDemo.ViewModels
             set
             {
                 date = value;
-                ValidateName();
+                ValidateDate();
                 OnPropertyChanged("Date");
             }
         }
@@ -45,6 +45,18 @@ namespace MauiStylesDemo.ViewModels
                 dateError = value;
                 OnPropertyChanged("DateError");
             }
+        }
+        private void ValidateDate()
+        {
+            double age = CalculateAge();
+            this.ShowDateError = age <= 13;
+        }
+        private double CalculateAge()
+        {
+            DateTime currentDate = DateTime.Today;
+            TimeSpan d= currentDate-Date ;
+            double ageInyears = d.TotalDays / 365.25;
+            return ageInyears;
         }
 
         #region שם
@@ -129,10 +141,7 @@ namespace MauiStylesDemo.ViewModels
         }
 
 
-        private void ValidateDate()
-        {
-            this.ShowDateError = !Age.HasValue || Age <= 13;
-        }
+      
 
 
         private void ValidateAge()
@@ -147,6 +156,8 @@ namespace MauiStylesDemo.ViewModels
             this.ShowNameError = false;
             this.AgeError = "הגיל חייב להיות גדול מ 13";
             this.ShowAgeError = false;
+            this.DateError = "התאריך לא תואם לגיל";
+            this.ShowDateError = false; 
             this.SaveDataCommand = new Command(() => SaveData());
         }
 
